@@ -178,167 +178,177 @@ const mixin = {
       }
     },
     getUserChecks() {
-      // Env variables
-      const api = process.env.VUE_APP_BACKEND_ENDPOINT;
-      const productId = process.env.VUE_APP_PRODUCT_ID;
-      const companyId = process.env.VUE_APP_COMPANY_ID;
+      if( process.env.VUE_APP_SCORM_MODE !== 'ON' ){
+        // Env variables
+        const api = process.env.VUE_APP_BACKEND_ENDPOINT;
+        const productId = process.env.VUE_APP_PRODUCT_ID;
+        const companyId = process.env.VUE_APP_COMPANY_ID;
 
-      // Get keys
-      const productUserKey = `product-${productId}-user`;
-      const productTokenKey = `product-${productId}-token`;
+        // Get keys
+        const productUserKey = `product-${productId}-user`;
+        const productTokenKey = `product-${productId}-token`;
 
-      // Storage data
-      const token = localStorage.getItem(productTokenKey);
-      let userData = localStorage.getItem(productUserKey);
-      userData = JSON.parse(userData);
+        // Storage data
+        const token = localStorage.getItem(productTokenKey);
+        let userData = localStorage.getItem(productUserKey);
+        userData = JSON.parse(userData);
 
-      // Prepare request
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify({
-          customerId: userData.customerId,
-          companyId,
-          productId
-        })
-      };
+        // Prepare request
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({
+            customerId: userData.customerId,
+            companyId,
+            productId
+          })
+        };
 
-      return fetch(`${api}/customers/objectChecks`, requestOptions)
-        .then(res => res.json())
-        .then(data => data)
-        .catch((error) => { throw error; });
+        return fetch(`${api}/customers/objectChecks`, requestOptions)
+          .then(res => res.json())
+          .then(data => data)
+          .catch((error) => { throw error; });
+      }
     },
     getHelpBarText() {
-      // Env variables
-      const api = process.env.VUE_APP_BACKEND_ENDPOINT;
-      const productId = process.env.VUE_APP_PRODUCT_ID;
-      const companyId = process.env.VUE_APP_COMPANY_ID;
+      if( process.env.VUE_APP_SCORM_MODE !== 'ON' ){
+        // Env variables
+        const api = process.env.VUE_APP_BACKEND_ENDPOINT;
+        const productId = process.env.VUE_APP_PRODUCT_ID;
+        const companyId = process.env.VUE_APP_COMPANY_ID;
 
-      // Get keys
-      const productTokenKey = `product-${productId}-token`;
+        // Get keys
+        const productTokenKey = `product-${productId}-token`;
 
-      // Storage data
-      const token = localStorage.getItem(productTokenKey);
+        // Storage data
+        const token = localStorage.getItem(productTokenKey);
 
-      // Prepare request
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify({
-          companyId,
-          productId
-        })
-      };
+        // Prepare request
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({
+            companyId,
+            productId
+          })
+        };
 
-      return fetch(`${api}/products/helpText`, requestOptions)
-        .then(res => res.json())
-        .then(data => data)
-        .catch((error) => { throw error; });
+        return fetch(`${api}/products/helpText`, requestOptions)
+          .then(res => res.json())
+          .then(data => data)
+          .catch((error) => { throw error; });
+      }
     },
     getCommentList(objectId) {
-      // Env variables
-      const api = process.env.VUE_APP_BACKEND_ENDPOINT;
-      const productId = process.env.VUE_APP_PRODUCT_ID;
-      const companyId = process.env.VUE_APP_COMPANY_ID;
+      if( process.env.VUE_APP_SCORM_MODE !== 'ON' ){
+        // Env variables
+        const api = process.env.VUE_APP_BACKEND_ENDPOINT;
+        const productId = process.env.VUE_APP_PRODUCT_ID;
+        const companyId = process.env.VUE_APP_COMPANY_ID;
 
-      // Get keys
-      const productUserKey = `product-${productId}-user`;
-      const productTokenKey = `product-${productId}-token`;
+        // Get keys
+        const productUserKey = `product-${productId}-user`;
+        const productTokenKey = `product-${productId}-token`;
 
-      // Storage data
-      const token = localStorage.getItem(productTokenKey);
-      let userData = localStorage.getItem(productUserKey);
-      userData = JSON.parse(userData);
+        // Storage data
+        const token = localStorage.getItem(productTokenKey);
+        let userData = localStorage.getItem(productUserKey);
+        userData = JSON.parse(userData);
 
-      // Prepare request
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify({
-          customerId: userData.customerId,
-          companyId,
-          productId,
-          objectId
-        })
-      };
+        // Prepare request
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({
+            customerId: userData.customerId,
+            companyId,
+            productId,
+            objectId
+          })
+        };
 
-      return fetch(`${api}/objects/comments`, requestOptions)
-        .then(res => res.json())
-        .then(data => data)
-        .catch((error) => { throw error; });
+        return fetch(`${api}/objects/comments`, requestOptions)
+          .then(res => res.json())
+          .then(data => data)
+          .catch((error) => { throw error; });
+      }
     },
     sendCommentForm(objectId, commentText) {
-      // Env variables
-      const api = process.env.VUE_APP_BACKEND_ENDPOINT;
-      const productId = process.env.VUE_APP_PRODUCT_ID;
-      const companyId = process.env.VUE_APP_COMPANY_ID;
+      if( process.env.VUE_APP_SCORM_MODE !== 'ON' ){
+        // Env variables
+        const api = process.env.VUE_APP_BACKEND_ENDPOINT;
+        const productId = process.env.VUE_APP_PRODUCT_ID;
+        const companyId = process.env.VUE_APP_COMPANY_ID;
 
-      // Get keys
-      const productUserKey = `product-${productId}-user`;
-      const productTokenKey = `product-${productId}-token`;
+        // Get keys
+        const productUserKey = `product-${productId}-user`;
+        const productTokenKey = `product-${productId}-token`;
 
-      // Storage data
-      const token = localStorage.getItem(productTokenKey);
-      let userData = localStorage.getItem(productUserKey);
-      userData = JSON.parse(userData);
+        // Storage data
+        const token = localStorage.getItem(productTokenKey);
+        let userData = localStorage.getItem(productUserKey);
+        userData = JSON.parse(userData);
 
-      // Prepare request
-      const requestOptions = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + token
-        },
-        body: JSON.stringify({
-          customerId: userData.customerId,
-          companyId,
-          productId,
-          objectId,
-          commentText
-        })
-      };
+        // Prepare request
+        const requestOptions = {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({
+            customerId: userData.customerId,
+            companyId,
+            productId,
+            objectId,
+            commentText
+          })
+        };
 
-      return fetch(`${api}/objects/postComment`, requestOptions)
-        .then(res => res.json())
-        .catch((error) => { throw error; });
+        return fetch(`${api}/objects/postComment`, requestOptions)
+          .then(res => res.json())
+          .catch((error) => { throw error; });
+      }
     },
     setPageChecked(stage) {
-      if (window.scormAPI !== undefined) {
-        // Get keys
-        const productId = process.env.VUE_APP_PRODUCT_ID;
-        const productStoragerKey = `product-${productId}-storage`;
+      if( process.env.VUE_APP_SCORM_MODE !== 'ON' ){
+        if (window.scormAPI !== undefined) {
+          // Get keys
+          const productId = process.env.VUE_APP_PRODUCT_ID;
+          const productStoragerKey = `product-${productId}-storage`;
 
-        // Get check list
-        let appChecks = localStorage.getItem(productStoragerKey) || '[]';
+          // Get check list
+          let appChecks = localStorage.getItem(productStoragerKey) || '[]';
 
-        // Cast
-        appChecks = JSON.parse(appChecks);
+          // Cast
+          appChecks = JSON.parse(appChecks);
 
-        // Add new stage
-        appChecks.push(stage);
+          // Add new stage
+          appChecks.push(stage);
 
-        // Remove duplicate values
-        appChecks = Array.from(new Set(appChecks));
+          // Remove duplicate values
+          appChecks = Array.from(new Set(appChecks));
 
-        // SCORM completed
-        if (appChecks.length === 14) {
-          window.scormAPI.LMSInitialize('');
-          window.scormAPI.LMSSetValue("cmi.core.lesson_status", "completed");
-          window.scormAPI.LMSCommit('');
-          console.log('COMPLETED');
+          // SCORM completed
+          if (appChecks.length === 14) {
+            window.scormAPI.LMSInitialize('');
+            window.scormAPI.LMSSetValue("cmi.core.lesson_status", "completed");
+            window.scormAPI.LMSCommit('');
+            console.log('COMPLETED');
+          }
+
+          // Store data
+          localStorage.setItem(productStoragerKey, JSON.stringify(appChecks));
         }
-
-        // Store data
-        localStorage.setItem(productStoragerKey, JSON.stringify(appChecks));
       }
     },
   },
