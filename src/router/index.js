@@ -42,6 +42,48 @@ const router = new Router({
   base: '/',
   routes: [
     {
+      path: '/',
+      name: 'login',
+      component: Login,
+      meta: { transitionName: 'fade' },
+    },
+    {
+      path: '/sso/:token',
+      name: 'sso',
+      component: SSO,
+      meta: { transitionName: 'fade' },
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile,
+      meta: { transitionName: 'fade' },
+    },
+    {
+      path: '/forgotPassword',
+      name: 'forgotPassword',
+      component: ForgotPassword,
+      meta: { transitionName: 'fade' },
+    },
+    {
+      path: '/welcome',
+      name: 'welcome',
+      component: Welcome,
+      meta: { transitionName: 'slide', transitionOrder: 1 },
+    },
+    {
+      path: '/how-is-the-journey-organized',
+      name: 'howIsTheJourneyOrganized',
+      component: howIsTheJourneyOrganized,
+      meta: { transitionName: 'slide', transitionOrder: 2 },
+    },
+    {
+      path: '/choose-your-navigation-type',
+      name: 'chooseYourNavigationType',
+      component: chooseYourNavigationType,
+      meta: { transitionName: 'slide', transitionOrder: 3 },
+    },
+    {
       path: '/estar-preparado-faz-diferenca',
       name: 'EstarPreparadoFazDiferenca',
       component: EstarPreparadoFazDiferenca,
