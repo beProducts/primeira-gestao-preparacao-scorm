@@ -154,7 +154,7 @@ const router = new Router({
       name: 'PontoDePartidaParaAPratica2',
       component: PontoDePartidaParaAPratica2,
       meta: { transitionName: 'fade', transitionOrder: 21, pageId: 95 },
-    },
+    }
   ],
 });
 
