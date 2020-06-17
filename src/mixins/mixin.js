@@ -103,6 +103,26 @@ const mixin = {
           .then(res => res.json())
           .then(data => data)
           .catch((error) => { throw error; });
+      }else{
+
+        const productId = process.env.VUE_APP_PRODUCT_ID;
+        const productStoragerKey = `product-${productId}-storage-checked-list`;
+
+        // Get check list
+        let appChecks = localStorage.getItem(productStoragerKey) || '[]';
+
+        // Cast
+        appChecks = JSON.parse(appChecks);
+
+        // Add new stage
+        appChecks.push({ objectId });
+
+        // Remove duplicate values
+        appChecks = Array.from(new Set(appChecks));
+
+        // Store data
+        localStorage.setItem(productStoragerKey, JSON.stringify(appChecks));
+
       }
     },
     setUserExit(objectId, timeElapsed) {
