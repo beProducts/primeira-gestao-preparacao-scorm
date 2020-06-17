@@ -115,11 +115,11 @@ const mixin = {
         appChecks = JSON.parse(appChecks);
 
         // Add new stage
-        appChecks.push({ objectId });
+        appChecks.push( objectId );
 
         // Remove duplicate values
         appChecks = Array.from(new Set(appChecks));
-
+        
         // Store data
         localStorage.setItem(productStoragerKey, JSON.stringify(appChecks));
 
@@ -232,14 +232,28 @@ const mixin = {
           .then(data => data)
           .catch((error) => { throw error; });
       }else{
-        return new Promise((resolve)=>{
-          const message = {
+
+        const productId = process.env.VUE_APP_PRODUCT_ID;
+        const productStoragerKey = `product-${productId}-storage-checked-list`;
+
+        // Get check list
+        let appChecks = localStorage.getItem(productStoragerKey) || '[]';
+
+        // Cast
+        appChecks = JSON.parse(appChecks);
+        
+        return new Promise((resolve) => {
+
+          const userChecks = {
             status: true,
-            message: "User check list",
-            userChecks: [{objectId: 84}, {objectId: 85}, {objectId: 86}, {objectId: 87}, {objectId: 90},{objectId: 88}]
+            message: "User checks list",
+            userChecks: appChecks.map( objectId => { return {objectId} })
           }
-          resolve(message)
+
+          resolve(userChecks)
         })
+        .then(data => data)
+        .catch((error) => { throw error; });
       }
     },
     getHelpBarText() {
