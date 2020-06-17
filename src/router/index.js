@@ -43,6 +43,13 @@ const router = new Router({
   routes: [
     {
       path: '/',
+      redirect: () => {
+        if (process.env.VUE_APP_SCORM_MODE !== 'ON')  return '/login';
+        else  return '/estar-preparado-faz-diferenca';
+      }
+    },
+    {
+      path: '/login',
       name: 'login',
       component: Login,
       meta: { transitionName: 'fade' },
@@ -169,18 +176,15 @@ router.beforeEach((to, from, next) => {
   const loggedIn = localStorage.getItem(productTokenKey);
 
   // Check authentication
-  if (authRequired && !loggedIn) {
+  if (authRequired && !loggedIn && process.env.VUE_APP_SCORM_MODE !== 'ON') {
     return next('/');
   }
 
   // Check tutorial
   const onBoardingPages = ['welcome', 'howIsTheJourneyOrganized', 'chooseYourNavigationType'];
   if (localStorage.getItem(productOnboardingKey) === 'N' && onBoardingPages.includes(to.name)) {
-    if (process.env.VUE_APP_SCORM_MODE !== 'ON'){
-      next({ path: '/comece-por-aqui' })
-    }else{
-      next({ path: '/estar-preparado-faz-diferenca' })
-    }
+    if (process.env.VUE_APP_SCORM_MODE !== 'ON')  next({ path: '/comece-por-aqui' })
+    else  next({ path: '/estar-preparado-faz-diferenca' })
   }
 
   next();
