@@ -211,6 +211,15 @@ const mixin = {
           .then(res => res.json())
           .then(data => data)
           .catch((error) => { throw error; });
+      }else{
+        return new Promise((resolve)=>{
+          const message = {
+            status: true,
+            message: "User check list",
+            userChecks: [{objectId: 84}, {objectId: 85}, {objectId: 86}, {objectId: 87}, {objectId: 90}]
+          }
+          resolve(message)
+        })
       }
     },
     getHelpBarText() {
@@ -320,7 +329,7 @@ const mixin = {
       }
     },
     setPageChecked(stage) {
-      if( process.env.VUE_APP_SCORM_MODE !== 'ON' ){
+      
         if (window.scormAPI !== undefined) {
           // Get keys
           const productId = process.env.VUE_APP_PRODUCT_ID;
@@ -349,7 +358,6 @@ const mixin = {
           // Store data
           localStorage.setItem(productStoragerKey, JSON.stringify(appChecks));
         }
-      }
     },
   },
 };

@@ -176,7 +176,11 @@ router.beforeEach((to, from, next) => {
   // Check tutorial
   const onBoardingPages = ['welcome', 'howIsTheJourneyOrganized', 'chooseYourNavigationType'];
   if (localStorage.getItem(productOnboardingKey) === 'N' && onBoardingPages.includes(to.name)) {
-    next({ path: '/comece-por-aqui' })
+    if (process.env.VUE_APP_SCORM_MODE !== 'ON'){
+      next({ path: '/comece-por-aqui' })
+    }else{
+      next({ path: '/estar-preparado-faz-diferenca' })
+    }
   }
 
   next();
