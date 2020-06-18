@@ -75,7 +75,12 @@ let pluginComponentDownloadJS = {
 
 let pluginComponentFormJS = {
   init: function () {
-    pluginComponentFormJS.getQuestions();
+    if( pluginJS.userData.scormMode !== "ON" ){
+      pluginComponentFormJS.getQuestions();
+    }else{
+      pluginComponentFormJS.getQuestionsStorage();
+      $("#frmQuestionsScorm").removeClass('hide');
+    }
   },
   initFormPlugins: function () {
     try{
@@ -90,6 +95,41 @@ let pluginComponentFormJS = {
     } catch(e) {
       //
     }
+  },
+  getQuestionsStorage: function(){
+
+    const questionsStorageKey = 'questions-storage';
+
+    // Get check list
+    let appChecks = localStorage.getItem(questionsStorageKey) || '[]';
+
+    // Cast
+    appChecks = JSON.parse(appChecks);
+
+    appChecks.forEach( question => {
+      switch( question.questionTypeId ){
+        case "1": document.getElementById('field-' + question.questionId).value = question.questionAnswer; break;
+        case "2": 
+        case "3": 
+          if( question.questionAnswer === "true" )
+            document.getElementById('field-' + question.questionId).checked = true;
+          else
+            document.getElementById('field-' + question.questionId).checked = false;
+          break;
+        case "4": document.getElementById('field-' + question.questionId).value = question.questionAnswer; break;
+        default: 
+      }
+    });
+
+    if (appChecks.length !== 0) {
+      $("#frmQuestionsScorm input, #frmQuestionsScorm select, #frmQuestionsScorm textarea").prop('disabled', true);
+      $("#frmQuestions input, #frmQuestions select, #frmQuestions textarea").prop('disabled', true);
+      $("#btnSend").addClass('hide');
+      $("#btnEdit, #btnDownload").removeClass('hide');
+    }
+
+    pluginComponentFormJS.initFormPlugins();
+
   },
   getQuestions: function () {
     $.ajax({
@@ -149,6 +189,7 @@ let pluginComponentFormJS = {
 
     // Unblock fields
     $("#frmQuestions input, #frmQuestions select, #frmQuestions textarea").prop('disabled', false);
+    $("#frmQuestionsScorm input, #frmQuestionsScorm select, #frmQuestionsScorm textarea").prop('disabled', false);
 
     // Enable save button
     $("#btnSend").removeClass('hide');
@@ -158,6 +199,13 @@ let pluginComponentFormJS = {
     pluginComponentFormJS.initFormPlugins();
   },
   sendForm: function (event) {
+    if( pluginJS.userData.scormMode !== "ON" ){
+      pluginComponentFormJS.sendFormServer(event);
+    }else{
+      pluginComponentFormJS.sendFormStorage();
+    }
+  },
+  sendFormServer: function(event) {
     // Cancel default event
     event.preventDefault();
 
@@ -169,6 +217,8 @@ let pluginComponentFormJS = {
       postData.push({ 'name': 'productId', 'value': pluginJS.userData.productId });
       postData.push({ 'name': 'objectId', 'value': pluginJS.userData.objectId });
       postData.push({ 'name': 'customerId', 'value': pluginJS.userData.customerId });
+
+      console.log(postData);
 
       $.ajax({
         method: "POST",
@@ -185,6 +235,37 @@ let pluginComponentFormJS = {
           console.log("Ops...deu algo errado. Tente novamente mais tarde.");
           // pluginComponentToastJS.show("error", "Ops...deu algo errado. Tente novamente mais tarde.");
         });
+    });
+  },
+  sendFormStorage: function() {
+
+    const questionsStorageKey = 'questions-storage';
+
+    // Cancel default event
+    event.preventDefault();
+
+    // title, content, btnConfirmText, btnCancelText, callBackConfirm, callBackCancel
+    pluginComponentDialogJS.confirm('', "Confirma a gravação dos dados?", "Sim", "Não", function () {
+      // Get form data
+      let postData = $("#frmQuestionsScorm").serializeArray();
+      let questionsAnswers = [];
+      let lastAnswer = '';
+
+      postData.forEach( question => {
+        const questionId = parseInt( question.name.match(/[0-9]/g).toString().replace(',', '') );
+        const value = question.name.match(/[a-zA-Z]+]$/g).toString().replace(']', '');
+        if( value === "value" ) lastAnswer = question.value;
+        if( value === "questionTypeId" ) {
+          const answer = { questionId: questionId, questionTypeId: question.value, questionAnswer: lastAnswer };
+          questionsAnswers.push( answer );
+          lastAnswer = '';
+        } 
+      });
+
+      localStorage.setItem(questionsStorageKey, JSON.stringify(questionsAnswers));
+
+      document.location.reload();
+
     });
   }
 }
