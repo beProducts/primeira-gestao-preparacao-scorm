@@ -79,7 +79,10 @@ let pluginComponentFormJS = {
       pluginComponentFormJS.getQuestions();
     }else{
       pluginComponentFormJS.getQuestionsStorage();
-      $("#form-scorm").removeClass('hide');
+      $("#form-scorm1").removeClass('hide');
+      $("#form-scorm2").removeClass('hide');
+      $("#form-scorm3").removeClass('hide');
+      $("#form-scorm4").removeClass('hide');
     }
   },
   initFormPlugins: function () {
