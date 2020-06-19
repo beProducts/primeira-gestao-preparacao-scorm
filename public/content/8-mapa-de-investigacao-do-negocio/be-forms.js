@@ -79,7 +79,7 @@ let pluginComponentFormJS = {
       pluginComponentFormJS.getQuestions();
     }else{
       pluginComponentFormJS.getQuestionsStorage();
-      $("#frmQuestionsScorm").removeClass('hide');
+      $("#form-scorm").removeClass('hide');
     }
   },
   initFormPlugins: function () {
@@ -107,22 +107,21 @@ let pluginComponentFormJS = {
     appChecks = JSON.parse(appChecks);
 
     appChecks.forEach( question => {
-      switch( question.questionTypeId ){
-        case "1": document.getElementById('field-' + question.questionId).value = question.questionAnswer; break;
+      switch( question.type ){
+        case "1": $('[name=' + question.name + ']').val(question.answer); break;
         case "2": 
-        case "3": 
-          if( question.questionAnswer === "true" )
-            document.getElementById('field-' + question.questionId).checked = true;
+          if( question.answer === "Y" )
+            $('[name=' + question.name + ']').prop('checked', true);
           else
-            document.getElementById('field-' + question.questionId).checked = false;
+            $('[name=' + question.name + ']').prop('checked', false);
           break;
-        case "4": document.getElementById('field-' + question.questionId).value = question.questionAnswer; break;
+        case "3": $('[name=' + question.name + '][value=' + question.answer + ']').prop('checked', true); break;
+        case "4": $('[name=' + question.name + ']').val(question.answer); break;
         default: 
       }
     });
 
     if (appChecks.length !== 0) {
-      $("#frmQuestionsScorm input, #frmQuestionsScorm select, #frmQuestionsScorm textarea").prop('disabled', true);
       $("#frmQuestions input, #frmQuestions select, #frmQuestions textarea").prop('disabled', true);
       $("#btnSend").addClass('hide');
       $("#btnEdit, #btnDownload").removeClass('hide');
@@ -189,7 +188,6 @@ let pluginComponentFormJS = {
 
     // Unblock fields
     $("#frmQuestions input, #frmQuestions select, #frmQuestions textarea").prop('disabled', false);
-    $("#frmQuestionsScorm input, #frmQuestionsScorm select, #frmQuestionsScorm textarea").prop('disabled', false);
 
     // Enable save button
     $("#btnSend").removeClass('hide');
@@ -212,13 +210,11 @@ let pluginComponentFormJS = {
     // title, content, btnConfirmText, btnCancelText, callBackConfirm, callBackCancel
     pluginComponentDialogJS.confirm('', "Confirma a gravação dos dados?", "Sim", "Não", function () {
       // Get form data
-      let postData = $("#frmQuestions").serializeArray();
+      let postData = $("#frmQuestions").find(':not([data-scorm-mode-on])').serializeArray();
       postData.push({ 'name': 'companyId', 'value': pluginJS.userData.companyId });
       postData.push({ 'name': 'productId', 'value': pluginJS.userData.productId });
       postData.push({ 'name': 'objectId', 'value': pluginJS.userData.objectId });
       postData.push({ 'name': 'customerId', 'value': pluginJS.userData.customerId });
-
-      console.log(postData);
 
       $.ajax({
         method: "POST",
@@ -247,19 +243,20 @@ let pluginComponentFormJS = {
     // title, content, btnConfirmText, btnCancelText, callBackConfirm, callBackCancel
     pluginComponentDialogJS.confirm('', "Confirma a gravação dos dados?", "Sim", "Não", function () {
       // Get form data
-      let postData = $("#frmQuestionsScorm").serializeArray();
+      let postData = $("#frmQuestions").serializeArray();
       let questionsAnswers = [];
-      let lastAnswer = '';
 
       postData.forEach( question => {
-        const questionId = parseInt( question.name.match(/[0-9]/g).toString().replace(',', '') );
-        const value = question.name.match(/[a-zA-Z]+]$/g).toString().replace(']', '');
-        if( value === "value" ) lastAnswer = question.value;
-        if( value === "questionTypeId" ) {
-          const answer = { questionId: questionId, questionTypeId: question.value, questionAnswer: lastAnswer };
-          questionsAnswers.push( answer );
-          lastAnswer = '';
-        } 
+        const type = $('[name=' + question.name + ']' ).attr('data-type');   
+        let answer = question.value;
+        
+        if(type === '2')  answer = ($('input:checked').length > 0) ? 'Y' : 'N';
+
+        questionsAnswers.push({
+          name: question.name,
+          type: type,
+          answer: answer
+        });
       });
 
       localStorage.setItem(questionsStorageKey, JSON.stringify(questionsAnswers));
