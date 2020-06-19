@@ -98,7 +98,7 @@ let pluginComponentFormJS = {
   },
   getQuestionsStorage: function(){
 
-    const questionsStorageKey = 'questions-storage';
+    const questionsStorageKey = 'product-' + pluginJS.userData.productId + '-questions-' + pluginJS.userData.objectId;
 
     // Get check list
     let appChecks = localStorage.getItem(questionsStorageKey) || '[]';
@@ -235,7 +235,7 @@ let pluginComponentFormJS = {
   },
   sendFormStorage: function() {
 
-    const questionsStorageKey = 'questions-storage';
+    const questionsStorageKey = 'product-' + pluginJS.userData.productId + '-questions-' + pluginJS.userData.objectId;
 
     // Cancel default event
     event.preventDefault();
