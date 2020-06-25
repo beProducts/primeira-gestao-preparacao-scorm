@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--This is a Reload version 2.5.6 SCORM 1.2 Content Package document-->
+<!--Spawned from the Reload Content Package Generator - http://www.reload.ac.uk-->
+<manifest xmlns="http://www.imsproject.org/xsd/imscp_rootv1p1p2" xmlns:imsmd="http://www.imsglobal.org/xsd/imsmd_rootv1p2p1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:adlcp="http://www.adlnet.org/xsd/adlcp_rootv1p2" identifier="MANIFEST-A1D52616F757DDA1B0DD46B12ED695C4" xsi:schemaLocation="http://www.imsproject.org/xsd/imscp_rootv1p1p2 imscp_rootv1p1p2.xsd http://www.imsglobal.org/xsd/imsmd_rootv1p2p1 imsmd_rootv1p2p1.xsd http://www.adlnet.org/xsd/adlcp_rootv1p2 adlcp_rootv1p2.xsd">
+  <metadata>
+    <schema>ADL SCORM</schema>
+    <schemaversion>1.2</schemaversion>
+  </metadata>
+  <organizations default="ORG-633AEC0CB29775E50E73AAA47472271E">
+    <organization identifier="ORG-633AEC0CB29775E50E73AAA47472271E" structure="hierarchical">
+      <title>Primeira Gestão - Preparação</title>
+      <item identifier="ITEM-5C9463BEBC7EE3ED4C8693EC94BD75B2" identifierref="index" isvisible="true">
+        <title>Conteúdo</title>
+      </item>
+    </organization>
+  </organizations>
+  <resources>
+    <resource href="index.html" identifier="index" adlcp:scormtype="sco" type="text/html">
+      <file href="js/app.js" />
+      <file href="js/app.js.map" />
+      <file href="js/chunk-vendors.js" />
+      <file href="js/chunk-vendors.js.map" />
+      <file href="js/scorm.js" />
+      <file href="img/loading.gif" />
+      <file href="img/login-cover.jpg" />
+      <file href="img/map-v.png" />
+      <file href="img/map.png" />
+      <file href="img/random-navigation.png" />
+      <file href="img/SanukOT-Bold.svg" />
+      <file href="img/SanukOT-Thin.svg" />
+      <file href="img/SanukOT.svg" />
+      <file href="img/sequel-navigation.png" />
+      <file href="css/app.css" />
+      <file href="css/chunk-vendors.css" />
+      <dependency identifierref="common_files" />
+    </resource>
+    <resource identifier="common_files" type="webcontent">
+      <file href="content/7-estar-preparado-faz-diferenca/index.html" />
+      <file href="content/8-mapa-de-investigacao-do-negocio/index.html" />
+      <file href="content/9-mapa-de-investigacao-da-area/index.html" />
+      <file href="content/10-estresse-e-nervosismo/index.html" />
+      <file href="content/11-perguntas-poderosas/index.html" />
+      <file href="content/12-agora-e-com-voce/index.html" />
+      <file href="content/13-inspire-se-aqui/index.html" />
+      <file href="content/14-ponto-de-partida-para-a-pratica/index.html" />
+      <file href="content/15-lidando-com-a-emocoes/index.html" />
+      <file href="content/16-como-se-preparar/index.html" />
+      <file href="content/17-inspire-se-aqui/index.html" />
+      <file href="content/18-ponto-de-partida-para-a-pratica/index.html" />
+    </resource>
+  </resources>
+</manifest>
+
