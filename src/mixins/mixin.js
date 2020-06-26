@@ -122,9 +122,11 @@ const mixin = {
 
         // SCORM completed
         if (appChecks.length >= process.env.VUE_APP_QUANTITY_OF_SESSION) {
-          window.scormAPI.LMSInitialize('');
-          window.scormAPI.LMSSetValue("cmi.core.lesson_status", "completed");
-          window.scormAPI.LMSCommit('');
+          try{
+            window.scormAPI.LMSInitialize('');
+            window.scormAPI.LMSSetValue("cmi.core.lesson_status", "completed");
+            window.scormAPI.LMSCommit('');
+          }catch(error){ console.log("not in lms") }
         }
         
         // Store data
