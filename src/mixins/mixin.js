@@ -120,6 +120,9 @@ const mixin = {
         // Remove duplicate values
         appChecks = Array.from(new Set(appChecks));
 
+        // Store data
+        localStorage.setItem(productStoragerKey, JSON.stringify(appChecks));
+
         // SCORM completed
         if (appChecks.length >= process.env.VUE_APP_QUANTITY_OF_SESSION) {
           try{
@@ -128,9 +131,6 @@ const mixin = {
             window.scormAPI.LMSCommit('');
           }catch(error){ console.log("not in lms") }
         }
-        
-        // Store data
-        localStorage.setItem(productStoragerKey, JSON.stringify(appChecks));
 
       }
     },
