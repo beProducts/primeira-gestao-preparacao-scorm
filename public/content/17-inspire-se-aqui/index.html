@@ -20,6 +20,13 @@
 
     <link rel="stylesheet" href="plyr/plyr.css">
     <script type="text/javascript" src="plyr/plyr.js"></script>
+    <style>
+        @media (min-width:1024px) {
+            .plyr_captions .plyr_caption {
+                font-size: 24px !important
+            }
+        }
+    </style>
 </head>
 <body>
     <main class="container mt-3">
@@ -27,6 +34,7 @@
             <div class="col s12">
                 <video id="player" playsinline controls>
                     <source src="inspire-se-aqui-integracao-com-a-equipe.mp4" type="video/mp4" size="576" />
+                    <track kind="captions" label="Português" src="./Inspire-se-aqui-Integracao-com-a-equipe-pt-br.vtt" srclang="pt-BR" default />
                 </video>
                 <h1 class="center-align m-3">Como se preparar para uma boa conversa com a sua equipe?</h1>
                 <h2 class="be-text-orange">Você já parou para pensar em como será a sua primeira reunião com a equipe?</h2>
@@ -36,7 +44,7 @@
         </div>
     </main>
     <script>
-        new Plyr('#player');
+        new Plyr('#player', {captions: {active: true}});
     </script>
 </body>
 </html>
